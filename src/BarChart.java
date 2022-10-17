@@ -17,6 +17,18 @@ import java.util.TreeMap;
      */
     public class BarChart {
 
+        public String getTitle() {
+            return title;
+        }
+
+        public String getxAxisLabel() {
+            return xAxisLabel;
+        }
+
+        public String getDataSource() {
+            return dataSource;
+        }
+
         // color palette for bars
         private static final Color[] COLORS = initColors();
 
@@ -217,23 +229,23 @@ import java.util.TreeMap;
         // sample client
         public static void main(String[] args) {
             // create the bar chart
-            String title = "The 10 most populous cities";
-            String xAxis = "Population (thousands)";
-            String source = "Source: United Nations";
+            String title = "The highest-grossing movies in the U.S. from 1982 to 2019";
+            String xAxis = "Gross revenue (unadjusted $)";
+            String source = "Source: Box Office Mojo";
             BarChart chart = new BarChart(title, xAxis, source);
-            chart.setCaption("2018");
+            chart.setCaption("1982");
 
             // add the bars to the bar chart
-            chart.add("Tokyo", 38194, "East Asia");
-            chart.add("Delhi", 27890, "South Asia");
-            chart.add("Shanghai", 25779, "East Asia");
-            chart.add("Beijing", 22674, "East Asia");
-            chart.add("Mumbai", 22120, "South Asia");
-            chart.add("São Paulo", 21698, "Latin America");
-            chart.add("Mexico City", 21520, "Latin America");
-            chart.add("Osaka", 20409, "East Asia");
-            chart.add("Cairo", 19850, "Middle East");
-            chart.add("Dhaka", 19633, "South Asia");
+            chart.add("101 Dalmations", 51000000, "Buena Vista");
+            chart.add("Absence of Malice", 20051405, "Sony / Columbia");
+            chart.add("Bambi", 40200000, "RKO");
+            chart.add("Chariots of Fire", 4477484, "Sony / Columbia");
+            chart.add("Cinderella", 20069939, "Buena Vista");
+            chart.add("Close Encounters of the Third Kind", 132088635, "Sony / Columbia");
+            chart.add("Empire Strikes Back", 209398025, "20th Century Fox");
+            chart.add("Ghost Story", 15006670, "Universal");
+            chart.add("Gone with the Wind", 189523031, "MGM/UA");
+            chart.add("Grease", 159978870, "Paramount");
 
             // draw the bar chart
             StdDraw.setCanvasSize(1000, 700);
