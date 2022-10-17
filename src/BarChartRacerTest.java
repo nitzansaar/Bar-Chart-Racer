@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,10 +57,14 @@ class BarChartRacerTest {
     }
 
     @Test
-    void findNumBars() throws FileNotFoundException {
+    void findNumBars() throws IOException {
         int[] numBars = barChartRacer.findNumBars();
-/*        for(int i = 0; i < numBars.length; i++){
-            System.out.println(numBars[i]);
-        }*/
+        System.out.println(numBars[0]);
+    }
+
+    @Test
+    void findFileLength() throws IOException {
+        int fileLength = barChartRacer.findFileLength();
+        System.out.println(fileLength);
     }
 }

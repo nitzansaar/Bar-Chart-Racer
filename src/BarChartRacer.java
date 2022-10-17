@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -66,20 +65,24 @@ public class BarChartRacer {
         String[] strings = line.split(",");
         return strings[4];
     }
-    public int[] findNumBars() throws FileNotFoundException {
+    public int[] findNumBars() throws IOException {
         File file = new File(fname);
         Scanner scanner = new Scanner(file);
-        int[] numBars = new int[100];
-        int count = 0;
-        while(scanner.hasNextLine()){
-            System.out.println(scanner.nextLine());
-/*            if(scanner.nextInt() >= 0 && scanner.nextInt() < 1000){
-                int temp = scanner.nextInt();
-                numBars[count] = temp;
-                count++;
-            }*/
+        //int fileLength = findFileLength();
+        int[] nums = new int[100];
+        int i = 0;
+        while(scanner.hasNextInt()){
+            nums[i++] = scanner.nextInt();
         }
-        return numBars;
+        return nums;
+    }
+    public int findFileLength() throws IOException {
+        File file = new File(fname);
+        LineNumberReader lineNumberReader = new LineNumberReader(new FileReader(file));
+        lineNumberReader.skip(Long.MAX_VALUE);
+        int lines = lineNumberReader.getLineNumber();
+        lineNumberReader.close();
+        return lines;
     }
 
 /*    public Bar[] getNextBars(Scanner input) {
