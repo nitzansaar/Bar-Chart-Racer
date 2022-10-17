@@ -1,5 +1,7 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class BarChartRacer {
@@ -25,7 +27,11 @@ public class BarChartRacer {
 
 
     public void drawChart() {
-
+        Scanner scanner = new Scanner(fname);
+        processHeader(scanner);
+        chart.reset();
+        getNextBars(scanner);
+        chart.setCaption("test caption");
     }
     /*
     Take as input an already-created Scanner,
@@ -44,7 +50,7 @@ public class BarChartRacer {
     @Param String line the line containing data
     @Returns the name of the subject located at after the first comma
      */
-    public String findName(String line){
+    public String parseName(String line){
         String[] strings = line.split(",");
         return strings[1];
     }
@@ -53,7 +59,7 @@ public class BarChartRacer {
     Converts the string value into an integer value
     @Returns the integer value of the subject located at after the third comma
      */
-    public int findValue(String line){
+    public int parseValue(String line){
         String[] strings = line.split(",");
         return Integer.parseInt(strings[3]);
     }
@@ -61,21 +67,35 @@ public class BarChartRacer {
 @Param String line the line containing data
 @Returns the string indicating the label of the subject located at after the fourth comma
  */
-    public String findLabel(String line){
+    public String parseLabel(String line){
         String[] strings = line.split(",");
         return strings[4];
     }
-    public int[] findNumBars() throws IOException {
-        File file = new File(fname);
-        Scanner scanner = new Scanner(file);
-        //int fileLength = findFileLength();
-        int[] nums = new int[100];
-        int i = 0;
-        while(scanner.hasNextInt()){
-            nums[i++] = scanner.nextInt();
-        }
-        return nums;
+    /*
+    @Param Scanner input
+    @Param String category the category of data
+    Creates a bar containing the name, value, category and label
+    @Returns the bar
+     */
+    public Bar createBar(Scanner input, String category){// doesn't say the category anywhere in text file - have to manually enter - isn't really being used anyways
+        String line = input.nextLine();
+        Bar bar = new Bar(parseName(line), parseValue(line), category, parseLabel(line));
+        return bar;
     }
+    /*
+    @Param Scanner input
+    Takes a scanner as an argument, skips a blank line and then finds the integer after the line
+    @Returns the integer value of how many bars
+     */
+    public int getNumBars(Scanner input) {
+        input.nextLine();
+        int num = Integer.parseInt(input.nextLine());
+        if(num == 0){
+            num = 1;
+        }
+        return num;
+    }
+/*
     public int findFileLength() throws IOException {
         File file = new File(fname);
         LineNumberReader lineNumberReader = new LineNumberReader(new FileReader(file));
@@ -84,11 +104,24 @@ public class BarChartRacer {
         lineNumberReader.close();
         return lines;
     }
+*/
+/*
+@Param Scanner input
+gets the number of lines to read, then reads in
+each line, parses it, create a Bar and adds it to the array.
+@Returns an array of Bars
+ */
+   public Bar[] getNextBars(Scanner input) {
+        int num = getNumBars(input);
+        System.out.println(num);
+        Bar[] bars = new Bar[num];
+        for(int i = 0; i < bars.length; i++){
+            Bar newbar = createBar(input, "category");
+            bars[i] = newbar;
+        }
+        return bars;
 
-/*    public Bar[] getNextBars(Scanner input) {
-
-
-    }*/
+   }
 
     public static void main(String[] args) {
         BarChartRacer br = new BarChartRacer();

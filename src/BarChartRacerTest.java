@@ -1,3 +1,4 @@
+import com.sun.source.tree.AssertTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,34 +38,45 @@ class BarChartRacerTest {
 
     @Test
     void findName() {
-        String name = barChartRacer.findName(line);
+        String name = barChartRacer.parseName(line);
         assertTrue(name.equals("101 Dalmations"));
         assertTrue(!name.equals("False"));
     }
 
     @Test
     void findValue() {
-        int val = barChartRacer.findValue(line);
+        int val = barChartRacer.parseValue(line);
         assertTrue(val == 51000000);
         assertFalse(val == 12345);
     }
 
     @Test
     void findLabel() {
-        String label = barChartRacer.findLabel(line);
+        String label = barChartRacer.parseLabel(line);
         assertTrue(label.equals("Buena Vista"));
         assertTrue(!label.equals("This is a test"));
     }
 
     @Test
-    void findNumBars() throws IOException {
-        int[] numBars = barChartRacer.findNumBars();
-        System.out.println(numBars[0]);
+    void getNum() {
+        barChartRacer.getNumBars(input);
     }
 
     @Test
-    void findFileLength() throws IOException {
-        int fileLength = barChartRacer.findFileLength();
-        System.out.println(fileLength);
+    void getNextBars() {
+        barChartRacer.processHeader(input);
+        Bar[] bar = barChartRacer.getNextBars(input);
+        for(int i = 0; i < bar.length; i++){
+            System.out.println(bar[i].name + " " + bar[i].value + " " + bar[i].label);
+        }
+        Bar[] bars = barChartRacer.getNextBars(input);
+        for(int i = 0; i < bars.length; i++){
+            System.out.println(bars[i].name + " " + bars[i].value + " " + bars[i].label);
+        }
+        Bar[] moreBars = barChartRacer.getNextBars(input);
+        for(int i = 0; i < bars.length; i++){
+            System.out.println(moreBars[i].name + " " + moreBars[i].value + " " + moreBars[i].label);
+        }
+
     }
 }
