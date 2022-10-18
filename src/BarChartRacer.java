@@ -26,7 +26,7 @@ public class BarChartRacer {
 
 
 
-    public void drawChart() throws FileNotFoundException {
+    public void drawChart(int numBars, int numMS) throws FileNotFoundException {
         File file = new File(fname);
         Scanner scanner = new Scanner(file);
         processHeader(scanner);
@@ -34,19 +34,23 @@ public class BarChartRacer {
         do{
             chart.reset();
             bars = getNextBars(scanner);
+            int nBars = bars.length - 1 - numBars;
+            if(nBars < 0){
+                nBars = 0;
+            }
             Arrays.sort(bars);
-            for(int i = bars.length - 1; i > 0; i--){
+            for(int i = bars.length - 1; i > nBars; i--){
                 chart.add(bars[i].name, bars[i].value, bars[i].label);
             }
             chart.setCaption(bars[0].getCategory());
             StdDraw.clear();
             this.chart.draw();
             StdDraw.show();
-            StdDraw.pause(50);
+            StdDraw.pause(numMS);
         }while(scanner.hasNextLine());
     }
-    public String getYear(String line){
-        String[] strings = line.split("-");
+    public String getCategory(String line){
+        String[] strings = line.split(",");
         return strings[0];
     }
     /*
@@ -76,7 +80,11 @@ public class BarChartRacer {
      */
     public int parseValue(String line){
         String[] strings = line.split(",");
-        return Integer.parseInt(strings[3]);
+        int temp = Integer.parseInt(strings[3]);
+        if(temp == 0){
+            temp = 1;
+        }
+        return temp;
     }
     /*
 @Param String line the line containing data
@@ -94,7 +102,7 @@ public class BarChartRacer {
      */
     public Bar createBar(Scanner input){
         String line = input.nextLine();
-        Bar bar = new Bar(parseName(line), parseValue(line), getYear(line), parseLabel(line));
+        Bar bar = new Bar(parseName(line), parseValue(line), getCategory(line), parseLabel(line));
         return bar;
     }
     /*
@@ -128,7 +136,6 @@ each line, parses it, create a Bar and adds it to the array.
  */
    public Bar[] getNextBars(Scanner input) {
         int num = getNumBars(input);
-        //System.out.println(num);
         Bar[] bars = new Bar[num];
         for(int i = 0; i < bars.length; i++){
             Bar newbar = createBar(input);
@@ -139,8 +146,18 @@ each line, parses it, create a Bar and adds it to the array.
    }
 
     public static void main(String[] args) throws FileNotFoundException {
-        BarChartRacer br = new BarChartRacer();
-        br.drawChart();
+        String fileName;
+        int numBars;
+        int numMS;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the file name: ");
+        fileName = sc.nextLine();
+        System.out.print("Enter number of bars to display: ");
+        numBars = sc.nextInt();
+        System.out.print("Enter number of millisecond to pause on the command line: ");
+        numMS = sc.nextInt();
+        BarChartRacer br = new BarChartRacer(fileName);
+        br.drawChart(numBars, numMS);
     }
 
 
