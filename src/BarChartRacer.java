@@ -26,12 +26,28 @@ public class BarChartRacer {
 
 
 
-    public void drawChart() {
-        Scanner scanner = new Scanner(fname);
+    public void drawChart() throws FileNotFoundException {
+        File file = new File(fname);
+        Scanner scanner = new Scanner(file);
         processHeader(scanner);
-        chart.reset();
-        getNextBars(scanner);
-        chart.setCaption("test caption");
+        Bar[] bars;
+        do{
+            chart.reset();
+            bars = getNextBars(scanner);
+            Arrays.sort(bars);
+            for(int i = bars.length - 1; i > 0; i--){
+                chart.add(bars[i].name, bars[i].value, bars[i].label);
+            }
+            chart.setCaption(bars[0].getCategory());
+            StdDraw.clear();
+            this.chart.draw();
+            StdDraw.show();
+            StdDraw.pause(50);
+        }while(scanner.hasNextLine());
+    }
+    public String getYear(String line){
+        String[] strings = line.split("-");
+        return strings[0];
     }
     /*
     Take as input an already-created Scanner,
@@ -39,7 +55,6 @@ public class BarChartRacer {
     (title, label and source) and creates a BarChart.
      */
     public void processHeader(Scanner input) {
-        if(!input.hasNext()) return;
         String title = input.nextLine();
         String label = input.nextLine();
         String source = input.nextLine();
@@ -77,9 +92,9 @@ public class BarChartRacer {
     Creates a bar containing the name, value, category and label
     @Returns the bar
      */
-    public Bar createBar(Scanner input, String category){// doesn't say the category anywhere in text file - have to manually enter - isn't really being used anyways
+    public Bar createBar(Scanner input){
         String line = input.nextLine();
-        Bar bar = new Bar(parseName(line), parseValue(line), category, parseLabel(line));
+        Bar bar = new Bar(parseName(line), parseValue(line), getYear(line), parseLabel(line));
         return bar;
     }
     /*
@@ -113,17 +128,17 @@ each line, parses it, create a Bar and adds it to the array.
  */
    public Bar[] getNextBars(Scanner input) {
         int num = getNumBars(input);
-        System.out.println(num);
+        //System.out.println(num);
         Bar[] bars = new Bar[num];
         for(int i = 0; i < bars.length; i++){
-            Bar newbar = createBar(input, "category");
+            Bar newbar = createBar(input);
             bars[i] = newbar;
         }
         return bars;
 
    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         BarChartRacer br = new BarChartRacer();
         br.drawChart();
     }

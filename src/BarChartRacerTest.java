@@ -79,4 +79,9 @@ class BarChartRacerTest {
         }
 
     }
+
+    @Test
+    void drawChart() throws FileNotFoundException {
+        barChartRacer.drawChart();
+    }
 }
