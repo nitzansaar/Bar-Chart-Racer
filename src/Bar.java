@@ -1,3 +1,6 @@
+/**
+ * Nitzan Saar Assignment 4: Bar Chart Racer
+ */
 public class Bar implements Comparable<Bar> {
         protected String name;
         protected int value;

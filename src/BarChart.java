@@ -1,4 +1,6 @@
-
+/**
+ * Nitzan Saar Assignment 4: Bar Chart Racer
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
