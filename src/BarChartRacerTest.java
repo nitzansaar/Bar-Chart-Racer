@@ -20,7 +20,7 @@ class BarChartRacerTest {
     void setup() throws FileNotFoundException {
         file = new File("movies.txt");
         input = new Scanner(file);
-        barChartRacer = new BarChartRacer("infinity-war.txt");
+        barChartRacer = new BarChartRacer("brands.txt");
     }
 
     @Test
@@ -82,6 +82,6 @@ class BarChartRacerTest {
 
     @Test
     void drawChart() throws FileNotFoundException {
-        barChartRacer.drawChart(10, 50);
+        barChartRacer.drawChart(10, 45);
     }
 }
