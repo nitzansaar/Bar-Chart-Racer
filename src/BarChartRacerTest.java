@@ -58,11 +58,6 @@ class BarChartRacerTest {
     }
 
     @Test
-    void getNum() {
-        barChartRacer.getNumBars(input);
-    }
-
-    @Test
     void getNextBars() {
         barChartRacer.processHeader(input);
         Bar[] bar = barChartRacer.getNextBars(input);

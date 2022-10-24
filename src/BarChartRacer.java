@@ -31,11 +31,10 @@ public class BarChartRacer {
         processHeader(scanner);
         Bar[] bars;
         while(scanner.hasNext()) {
-            //StdAudio.loop("hiphopinstrumental.wav");
             chart.reset();
             bars = getNextBars(scanner);
             int nBars = bars.length - 1 - numBars;
-            if (nBars < 0) {
+            if (nBars < 0) {// in case the user chooses to display more bars than how many exist
                 nBars = 0;
             }
             Arrays.sort(bars);
