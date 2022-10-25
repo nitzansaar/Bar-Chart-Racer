@@ -84,7 +84,7 @@ public class BarChartRacer {
     public int parseValue(String line){
         String[] strings = line.split(",");
         int temp = Integer.parseInt(strings[3]);
-        if(temp == 0){
+        if(temp == 0){// in case the initial value is 0
             temp = 1;
         }
         return temp;
