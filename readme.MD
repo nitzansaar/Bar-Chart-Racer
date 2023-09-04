@@ -1,63 +1,68 @@
-### Homework #4: Bar Chart Racer
+# Bar Chart Racer Project
 
-#### Due: Friday, October 21 at start of class.
+This project focuses on creating a Bar Chart Racer, which displays a dynamic bar chart representing data over time. The program reads data from a file, sorts and selects a specified number of bars, and animates the chart to visualize changes over time.
 
-(This assignment is based on a similar one developed by Kevin Wayne at Princeton and presented at SIGCSE's Nifty Assignments Symposium. The Bar Chart code was written by him.)
+## Project Structure
 
+The project consists of several Java classes that work together to create and animate the Bar Chart Racer:
 
-This homework will be graded using specifications grading. There are a sequence of tasks to complete. Grades will be assigned as follows:
+- **Bar**: This class represents a bar in the bar chart. It contains properties like name, value, category, and label. The `compareTo` method is used for sorting bars by value.
 
-- To receive a C, you should complete tasks 1,2,3
-- To receive a B, complete all the C-level tasks, plus tasks 4 and 5.
-- To receive an A, complete the B-level tasks, plus task 6.
+- **BarChart**: This class is responsible for creating and drawing the bar chart. It supports adding bars, setting properties like title and labels, and animating the chart.
 
+- **BarChartRacer**: This class manages the process of reading data from a file, creating bars, and animating the bar chart.
 
-In this assignment you'll be writing a program to produce animated bar charts such as [this one](http://nifty.stanford.edu/2020/wayne-bar-chart-racer/cities-sound.mp4):
+- **BarChartRacerTest**: This JUnit test class contains test methods to verify the functionality of the `BarChartRacer` class.
 
-The repo includes two classes that handle all the drawing: BarChart and StdDraw. You do not need to alter these.
+- **BarTest**: This JUnit test class contains test methods to verify the functionality of the `Bar` class.
 
-The repo also includes a collection of different datasets that you can use for your racer.
+## Getting Started
 
-Task 1. To begin, we need to implement the Bar class. This will be the object that stores the
-data we want to display. Bar contains the data's name, value, the category it belongs to, and the label that should go with the caption.
-In order for us to sort the data, Bar needs to implement the Comparable interface. 
+To run the project and visualize the Bar Chart Racer:
 
-Complete the Bar class and use JUnit to create a BarTest class that tests compareTo and ensures that it works.
-You will need to fill in the setters and getters and implement compareTo.
+1. Clone or download the project files.
+2. Ensure you have Java installed on your system.
+3. Open the project in your preferred Java development environment (e.g., IntelliJ IDEA, Eclipse).
+4. Compile and run the `BarChartRacer` class, providing the necessary inputs (file name, number of bars, pause duration).
 
-Task 2: The BarChart class and the StdDraw class will handle all of the drawing for you.
-BarChart has a main() method that shows how to add items to a chart and produce a static image. The data in here is hardcoded - modify it to use some of the data from the movies.txt file.
-(This will give you some familiarity with how the BarChart works.)
+## Usage
 
-Task 3: We now need to implement the BarChartRacer class. To begin, implement processHeader. It should take as input an already-created 
-Scanner, read in the first three lines of the file (title, label and source) and create a BarChart.
+1. The `BarChartRacer` class reads data from a file, creates bars, and animates the bar chart.
+2. The `BarChart` class is responsible for creating and drawing the bar chart with customizable properties.
+3. The `Bar` class represents individual bars with properties like name, value, category, and label.
 
-Task 4: Next, implement getNextBars. It should take as input an already-created Scanner and return an array of Bars
-representing the next group of data. It will need to read in the first number to see how many lines follow, then read in 
-each line, parse it, create a Bar and add it to the array.
+## Testing
 
-(note: some files, such as infinity-war.txt, have initial values of 0, which will make BarChart crash. To solve this, set the value to max(value, 1)).
+The project includes JUnit tests (`BarChartRacerTest` and `BarTest`) to ensure the correctness of the implementation.
 
-Task 5: Now you're ready to implement drawChart. It will need to:
+1. Run the JUnit tests to verify the functionality of the `BarChartRacer` and `Bar` classes.
 
-- create a Scanner.
-- process the headers.
-- repeatedly:
-  - call reset() on the chart to clear it.
-  - Read in the next set of Bars.
-  - call chart.setCaption() to show the current data group.
-  - use Arrays.sort() to sort the Bars in order.
-  - use the nbars variable to determine how many bars to add.
-  - add the top n Bars to the chart in descending order.
-    
-  (note: sort() sorts the array in *ascending* order. How do you get the n largest elements? Don't reverse the whole thing!!)
-  - call StdDraw.clear();
-  - call this.chart.draw(); to render the chart. 
-  - call StdDraw.show(); to make the window display. 
-  - call StdDraw.pause(100); to wait 100 ms.
-    (If you would like to add music, add StdAudio.loop("file.wav"); to the beginning of your program.)
+## What I Learned
 
-Task 6: You're almost done! Now extend the main() so that the user can provide the 
-name of a data file, the number of bars to display, and the number of ms to pause on the command line. Try it out with the different files that are included.
+Throughout the development of this Bar Chart Racer project, I gained valuable insights and skills:
 
+- **Java Programming**: I developed a strong understanding of object-oriented programming in Java. I learned to create classes, use constructors, implement methods, and handle exceptions.
+
+- **File Handling**: I learned how to read data from files and process it to extract relevant information. This allowed me to efficiently manage and manipulate data for visualization.
+
+- **Data Visualization**: I acquired knowledge about creating graphical visualizations using libraries like `StdDraw`. I understood how to design and animate charts to effectively communicate data trends.
+
+- **Algorithmic Thinking**: By implementing sorting algorithms and designing the bar chart animation, I honed my problem-solving skills. I learned to optimize code for performance and efficiency.
+
+- **Unit Testing**: I explored the importance of testing software using JUnit tests. I gained confidence in the functionality of my code and learned how to identify and fix potential issues.
+
+This project has provided me with hands-on experience in Java programming, data visualization, and software development practices. It has equipped me with valuable skills that I can apply to future programming projects and opportunities.
+
+## Example Usage
+
+Here's an example of how to use the Bar Chart Racer:
+
+```java
+public static void main(String[] args) throws FileNotFoundException {
+    String fileName = "data.txt";
+    int numBars = 10;
+    int numMS = 50;
+    BarChartRacer br = new BarChartRacer(fileName);
+    br.drawChart(numBars, numMS);
+}
 
